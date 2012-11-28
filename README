@@ -1,0 +1,12 @@
+SiteBlocker README:
+ 
+This is a very simple extension for Google Chrome. When you find yourself on a website that is taking too much of your time, simply hit the SiteBlocker button in the upper right of Chrome (currently has a hello world logo) and you will be blocked from visiting that site while SiteBlocker remains active. To resume visiting any site blocked by SiteBlocker, you must disable the extension. Future updates will allow for clearing the list of blocked sites, but currently I feel that the more barriers there are to re-enabling access the better.
+ 
+To install this beta extension, download the code from GitHub, extract it, and then add it to Chrome ass detailed in step 4 of Create and Load Extensions on this page: http://developer.chrome.com/extensions/getstarted.html
+ 
+Once the SiteBlocker is enabled, when you are on a page that you do not want to waste time on anymore, simply hit the SiteBlocker button and the site will be blocked.
+ 
+To disable SiteBlocker, return to chrome://extensions and uncheck the box next to SiteBlocker.
+ 
+The only way to clear the list of blocked sites is to delete the extension from your browser and then reload it from the folder you have it saved in.
+
