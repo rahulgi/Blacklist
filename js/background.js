@@ -14,7 +14,7 @@ function requestChecker(request) {
     if (request.type == "main_frame") {
       for (var i = 0; i < blockedSites.length; ++i) {
         if (request.url.match(new RegExp(".*" + blockedSites[i] + ".*", "i"))) {
-          alert("This website has been blocked.");
+          // alert("This website has been blocked.");
           return {redirectUrl: chrome.extension.getURL("blockedSite.html")};
         } 
       }
