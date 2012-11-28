@@ -16,9 +16,10 @@ chrome.storage.local.get("blocked", function(items) {
 
         blockedSites.push(urlToBlock); 
 
+        chrome.extension.getBackgroundPage().addBlockedSite(urlToBlock);
+
         chrome.storage.local.set( {blocked: blockedSites}, function() {
           console.log("Site BLocked");
-          chrome.extension.getBackgroundPage().addBlockedSite(urlToBlock);
         });
       }
     });
