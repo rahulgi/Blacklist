@@ -1,7 +1,7 @@
 {
-  "name": "SiteBlocker",
-  "version": "0.1",
-  "manifest_version": 2,
+  "name": "Blacklist",
+  "version": "0.5",
+  "manifest_version": 3,
   "description": "Very simple website blocker for personal use.",
   "browser_action": {
     "default_icon": "icon.png",

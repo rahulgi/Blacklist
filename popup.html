@@ -1,10 +1,10 @@
 <!doctype html>
 <html>
   <head>
-    <title>AccountPuppy</title>
-
+    <title>Blacklist</title>
+    
     <link rel=stylesheet href="bootstrap/css/bootstrap.min.css" type="text/css" >
-
+    
     <!-- JavaScript and HTML must be in separate files for security. -->
   </head>
   <body>
@@ -12,11 +12,15 @@
   <div class="container">
     <hr class="featurette-divider">
     <div class="featurette" id="main-container">
-      <h1>This website has been blocked.</h1>
+      <button class="btn" id="blacklistButton" >Block this site</button>
+      <hr class="featurette-divider">
+      <button class="btn" id="clearBlacklistButton" >Clear Blacklist</button>
     </div>
     <hr class="featurette-divider">
   </div>
 
+  <script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
   <script type="text/javascript" src="js/popup.js"></script>
+  
   </body>
 </html>

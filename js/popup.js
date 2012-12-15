@@ -1,27 +1,43 @@
-chrome.storage.local.get("blocked", function(items) {
-  var blockedSites = [];
-  if (items.blocked)
-    blockedSites = items.blocked;
+function clearBlacklist() {
+  chrome.storage.local.set( {blocked: []}, function() {
+    console.log("Blacklist cleared");
+  });
+  chrome.extension.getBackgroundPage().clearBlacklist();
+}
 
-  console.log("blocked sites is: " + blockedSites);
+function blacklistSite() {
+  chrome.storage.local.get("blocked", function(items) {
+    var blockedSites = [];
+    if (items.blocked)
+      blockedSites = items.blocked;
 
-  chrome.tabs.getSelected(null, function(tab) {
-    chrome.tabs.sendMessage(tab.id, {} , function(response) {
-      console.log("BLOCKING SITE " + response.URL);
+    console.log("blocked sites is: " + blockedSites);
 
-      var urlToBlock = /.*\/\/.*?\//.exec(response.URL)[0];
-      console.log("Root URL is " + urlToBlock);
+    chrome.tabs.getSelected(null, function(tab) {
+      chrome.tabs.sendMessage(tab.id, {} , function(response) {
+        console.log("BLOCKING SITE " + response.URL);
 
-      if (urlToBlock != "" && blockedSites.indexOf(urlToBlock) == -1) { 
+        var urlToBlock = /.*\/\/.*?\//.exec(response.URL)[0];
+        console.log("Root URL is " + urlToBlock);
 
-        blockedSites.push(urlToBlock); 
+        if (urlToBlock != "" && blockedSites.indexOf(urlToBlock) == -1) { 
 
-        chrome.extension.getBackgroundPage().addBlockedSite(urlToBlock);
+          blockedSites.push(urlToBlock); 
 
-        chrome.storage.local.set( {blocked: blockedSites}, function() {
-          console.log("Site BLocked");
-        });
-      }
+          chrome.extension.getBackgroundPage().addBlockedSite(urlToBlock);
+
+          chrome.storage.local.set( {blocked: blockedSites}, function() {
+            console.log("Site Blocked");
+          });
+        }
+      });
     });
   });
-});
+}
+
+var triggered = 0;
+if (triggered ++ == 0) {
+  $("#blacklistButton").click(blacklistSite);
+
+  $("#clearBlacklistButton").click(clearBlacklist);
+}
