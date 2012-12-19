@@ -1,4 +1,16 @@
+// var blockedRoot = "";
+
+console.log("Content script running");
+
 chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
-  sendResponse( {URL: document.URL} );
-  window.location = chrome.extension.getURL("blockedSite.html");
+  console.log("Message action " + request.action);
+  if (request.action == "geturl")
+    sendResponse( {URL: document.URL} );
+  else if (request.action == "redirect") {
+    window.location = chrome.extension.getURL("blockedSite.html?blocked=" + request.blockedSite);
+    // blockedRoot = request.blockedSite;
+  } 
+  /*else if (request.action == "seturl") 
+    blockedRoot = request.blockedSite;
+  */
 });
