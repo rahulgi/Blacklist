@@ -6,15 +6,18 @@ chrome.storage.local.get("blocked", function(items) {
     blockedSites = items.blocked;
 });
 
-function addBlockedSite(blockedSite) {
+function addBlockedSite(tabid, blockedSite) {
   blockedSites.push(blockedSite);
+  tabBlockingMap[tabid] = blockedSite;
 }
 
 function clearBlacklist() {
   blockedSites = [];
+  tabBlockingMap = {};
 }
 
 function getTabState(tabid) {
+  console.log(tabid);
   return tabBlockingMap[tabid];
 }
 
@@ -29,7 +32,7 @@ function requestChecker(request) {
       }
       chrome.tabs.getSelected(null, function(tab) {
         tabBlockingMap[tab.id] = tabBlockingState;
-        console.log("tab blocking state set");
+        console.log("tab blocking state set for tab " + tab.id + " to " + tabBlockingState);
       });
       if (tabBlockingState != 0)
         return {redirectUrl: chrome.extension.getURL("blockedSite.html?blocked=" + tabBlockingState)};
@@ -38,3 +41,9 @@ function requestChecker(request) {
 }
 
 chrome.webRequest.onBeforeRequest.addListener(requestChecker, {urls: ["*://*/*"]}, ["blocking"]);
+
+chrome.webNavigation.onTabReplaced.addListener(function(details) {
+  console.log("replacing tab " + details.replacedTabId + " with tab " + details.tabId);
+  tabBlockingMap[details.tabId] = tabBlockingMap[details.replacedTabId];
+  delete tabBlockingMap[details.replacedTabId];
+});
