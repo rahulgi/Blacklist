@@ -7,6 +7,12 @@ function clearBlacklist() {
   chrome.extension.getBackgroundPage().clearBlacklist();
 }
 
+function unlist() {
+  chrome.tabs.getSelected(null, function(tab) {
+    chrome.extension.sendMessage(tab.id);
+  });
+}
+
 function blacklistSite() {
   console.log("Blacklist site clicked");
   chrome.storage.local.get("blocked", function(items) {
@@ -48,7 +54,7 @@ if (triggered ++ == 0) {
       button.click(blacklistSite);
       button.text("Blacklist site");
     } else {
-      button.click(clearBlacklist);
+      button.click(unlist);
       button.text("Remove " + tabState + " from the Blacklist");
     }
   });    

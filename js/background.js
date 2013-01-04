@@ -11,6 +11,16 @@ function addBlockedSite(tabid, blockedSite) {
   tabBlockingMap[tabid] = blockedSite;
 }
 
+function unlistSite(tabid, site) {
+  var i = blockedSites.indexOf(site);
+  if (i > -1)
+    blockedSites.splice(i, 1);
+  chrome.storage.local.set( {blocked: blockedSites}, function() {
+    console.log("Site Unlisted");
+  });
+  tabBlockingMap[tabid] = 0;
+}
+
 function clearBlacklist() {
   blockedSites = [];
   tabBlockingMap = {};
@@ -22,6 +32,7 @@ function getTabState(tabid) {
 }
 
 function requestChecker(request) {
+  console.log("onBeforeRequest");
   if(request && request.url) {
     if (request.type == "main_frame") {
       var tabBlockingState = 0;
@@ -42,8 +53,17 @@ function requestChecker(request) {
 
 chrome.webRequest.onBeforeRequest.addListener(requestChecker, {urls: ["*://*/*"]}, ["blocking"]);
 
-chrome.webNavigation.onTabReplaced.addListener(function(details) {
+function updateMapping(details) {
+  console.log("onCommitted");
   console.log("replacing tab " + details.replacedTabId + " with tab " + details.tabId);
-  tabBlockingMap[details.tabId] = tabBlockingMap[details.replacedTabId];
-  delete tabBlockingMap[details.replacedTabId];
-});
+  if (typeof details.replacedTabId == "undefined") {
+    tabBlockingMap[details.tabId] = 0;
+  }
+  else {
+    tabBlockingMap[details.tabId] = tabBlockingMap[details.replacedTabId];
+    delete tabBlockingMap[details.replacedTabId];
+  }
+}
+
+chrome.webNavigation.onTabReplaced.addListener(updateMapping);
+chrome.webNavigation.onCommitted.addListener(updateMapping);
