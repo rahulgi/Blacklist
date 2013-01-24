@@ -9,6 +9,7 @@
     "48": "icon.48.png",
     "128": "icon.128.png"
   },
+  "homepage_url": "http://rahulgi.github.com/SiteBlocker",
   "browser_action": {
     "default_icon": "icon.48.png",
     "default_popup": "popup.html"
