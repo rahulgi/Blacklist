@@ -1,7 +1,7 @@
 {
   "name": "Blacklist",
-  "version": "0.9",
-  "manifest_version": 4,
+  "version": "0.91",
+  "manifest_version": 2,
   
   "description": "Blacklist is a very simple website blocker designed for personal use.",
   "icons": {
