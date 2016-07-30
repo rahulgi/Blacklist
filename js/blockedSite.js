@@ -7,15 +7,6 @@ var content = $("#countdown");
 var i = 15;
 var interval = 0;
 
-$.ajax({
-  url: "http://tranquil-lowlands-5473.herokuapp.com/",
-  type: "POST",
-  data: {
-    "page[base_url]": site
-  },
-}).done(function(data) {
-});
-
 function updateCountdown() {
   content.text("Unlisting " + site + " in " + --i + " seconds...");
   if (i == 0) {
