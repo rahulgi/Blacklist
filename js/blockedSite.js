@@ -35,7 +35,8 @@ function hideModal() {
 $("#unlistModal").on('hidden', modalHidden);
 $("#cancelUnlist").click(hideModal);
 
-chrome.extension.onMessage.addListener(function(message, sender, sendResponse) {
+chrome.extension.onMessage.addListener(
+    function(message, sender, sendResponse) {
   chrome.tabs.getCurrent(function(tab) {
     if (tab.id == message) {
       $("#unlistModal").modal("show");
