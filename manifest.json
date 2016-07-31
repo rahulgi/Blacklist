@@ -10,10 +10,12 @@
     "128": "icon.128.png"
   },
   "homepage_url": "http://rahulgi.github.com/Blacklist",
+
   "browser_action": {
     "default_icon": "icon.48.png",
     "default_popup": "popup.html"
   },
+
   "background": {
     "scripts": ["js/background.js"]
   },
@@ -29,6 +31,11 @@
       "run_at": "document_start"
     }
   ],
+
+  "web_accessible_resources": [
+    "blockedSite.html"
+  ],
+
   "permissions": [
     "*://*/*",
     "tabs",
@@ -36,5 +43,6 @@
     "webRequest",
     "webRequestBlocking",
     "webNavigation"
-  ]
+  ],
+  "incognito": "split"
 }
