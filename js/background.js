@@ -33,7 +33,7 @@ function getTabState(tabid) {
 
 function requestChecker(request) {
   console.log("onBeforeRequest");
-  if(request && request.url) {
+  if (request && request.url) {
     if (request.type == "main_frame") {
       var tabBlockingState = 0;
       for (var i = 0; i < blockedSites.length; ++i) {
@@ -50,11 +50,11 @@ function requestChecker(request) {
           " to " +
           tabBlockingState);
       });
-      if (tabBlockingState != 0)
-        return {
-          redirectUrl: chrome.extension.getURL(
-            "blockedSite.html?blocked=" + tabBlockingState)
-        };
+      if (tabBlockingState != 0) {
+        var redirectUrl = chrome.extension.getURL(
+            "blockedSite.html?blocked=" + tabBlockingState);
+        return { redirectUrl: redirectUrl };
+      }
     }
   }
 }
@@ -70,7 +70,9 @@ function updateMapping(details) {
     " with tab " +
     details.tabId);
   if (typeof details.replacedTabId == "undefined") {
-    tabBlockingMap[details.tabId] = 0;
+    if (!details.tabId in tabBlockingMap) {
+      tabBlockingMap[details.tabId] = 0;
+    }
   }
   else {
     tabBlockingMap[details.tabId] = tabBlockingMap[details.replacedTabId];
