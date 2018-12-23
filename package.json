@@ -6,7 +6,7 @@
   "author": "Rahul Gupta-Iwasaki",
   "license": "MIT",
   "scripts": {
-    "deploy": "NODE_DEBUG=gh-pages; gh-pages -d dist"
+    "deploy": "gh-pages -d dist"
   },
   "devDependencies": {
     "gh-pages": "^2.0.1"
