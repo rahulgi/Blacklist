@@ -1,0 +1,14 @@
+{
+  "name": "Blacklist",
+  "version": "0.93",
+  "description": "Blacklist is a very simple website blocker designed for personal use.",
+  "repository": "git@github.com:rahulgi/Blacklist.git",
+  "author": "Rahul Gupta-Iwasaki",
+  "license": "MIT",
+  "scripts": {
+    "deploy": "gh-pages -d gh-pages"
+  },
+  "devDependencies": {
+    "gh-pages": "^2.0.1"
+  }
+}
