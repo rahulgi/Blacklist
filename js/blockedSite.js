@@ -9,7 +9,7 @@ var interval = 0;
 
 function updateCountdown() {
   content.text("You can unblock " + site + " in " + --i + " seconds...");
-  if (i == 0) {
+  if (i <= 0) {
     content.text("You can unblock " + site + " now.");
 
     clearInterval(interval);
