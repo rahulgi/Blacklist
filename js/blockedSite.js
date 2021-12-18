@@ -17,10 +17,14 @@ function updateCountdown() {
   }
 }
 
+var begoneCountdown = false;
 function beginCountdown() {
-  i = 15;
-  content.text("Unlisting " + site + " in " + i + " seconds...");
-  interval = setInterval(function() {updateCountdown(i)}, 1000);
+  if (!begoneCountdown) {
+    begoneCountdown = true;
+    i = 15;
+    content.text("Unlisting " + site + " in " + i + " seconds...");
+    interval = setInterval(function() {updateCountdown(i)}, 1000);
+  }
 }
 
 function modalHidden() {
