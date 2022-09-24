@@ -8,20 +8,23 @@ var i = 15;
 var interval = 0;
 
 function updateCountdown() {
-  content.text("Unlisting " + site + " in " + --i + " seconds...");
-  if (i == 0) {
+  content.text("You can unblock " + site + " in " + --i + " seconds...");
+  if (i <= 0) {
+    content.text("You can unblock " + site + " now.");
+
     clearInterval(interval);
-    chrome.tabs.getCurrent(function(tab) {
-      chrome.extension.getBackgroundPage().unlistSite(tab.id, site);
-    });
-    window.location = site;
+    $("#unblockBtn").toggleClass("hide")
   }
 }
 
+var begoneCountdown = false;
 function beginCountdown() {
-  i = 15;
-  content.text("Unlisting " + site + " in " + i + " seconds...");
-  interval = setInterval(function() {updateCountdown(i)}, 1000);
+  if (!begoneCountdown) {
+    begoneCountdown = true;
+    i = 15;
+    content.text("Unlisting " + site + " in " + i + " seconds...");
+    interval = setInterval(function() {updateCountdown(i)}, 1000);
+  }
 }
 
 function modalHidden() {
@@ -32,8 +35,15 @@ function hideModal() {
   $("#unlistModal").modal("hide");
 }
 
+function clearSiteblock() {
+  chrome.tabs.getCurrent(function(tab) {
+    chrome.extension.getBackgroundPage().unlistSite(tab.id, site);
+  });
+  window.location = site;
+}
+
 $("#unlistModal").on('hidden', modalHidden);
-$("#cancelUnlist").click(hideModal);
+$("#unblockBtn").click(clearSiteblock)
 
 chrome.extension.onMessage.addListener(
     function(message, sender, sendResponse) {
