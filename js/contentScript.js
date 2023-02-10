@@ -9,6 +9,6 @@ chrome.extension.onMessage.addListener(
     sendResponse( {URL: document.URL} );
   else if (request.action == "redirect") {
     window.location = chrome.extension.getURL(
-      "blockedSite.html?blocked=" + request.blockedSite);
+      "blockedSite.html?blocked=" + request.blocked);
   }
 });
